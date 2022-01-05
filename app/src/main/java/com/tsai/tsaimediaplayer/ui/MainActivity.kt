@@ -1,4 +1,4 @@
-package com.tsai.tsaimediaplayer
+package com.tsai.tsaimediaplayer.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

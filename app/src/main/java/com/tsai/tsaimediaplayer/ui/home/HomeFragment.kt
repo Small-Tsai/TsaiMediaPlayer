@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.tsai.tsaimediaplayer.R
+import com.tsai.tsaimediaplayer.data.Video
 import com.tsai.tsaimediaplayer.databinding.FragmentHomeBinding
 import com.tsai.tsaimediaplayer.ext.getVmFactory
+import com.tsai.tsaimediaplayer.util.Logger
 
 class HomeFragment : Fragment() {
 
@@ -21,7 +23,17 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        return binding.root
+
+        val adapter = HomeAdapter()
+        viewModel.myVideoList.observe(viewLifecycleOwner, {
+            Logger.d("$it")
+            adapter.submitList(it)
+        })
+
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            homeRev.adapter = adapter
+            return root
+        }
     }
 }

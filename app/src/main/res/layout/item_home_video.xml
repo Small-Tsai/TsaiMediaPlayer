@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="videoInfo"
+            type="com.tsai.tsaimediaplayer.ui.home.VideoInformation" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/video_img"
+            imageUrl="@{videoInfo.img}"
+            android:layout_width="250sp"
+            android:layout_height="200sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:shapeAppearanceOverlay="@style/roundedCorner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/video_img_style" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:background="@color/dark_grey"
+            android:text="@{videoInfo.videoName}"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@+id/video_img"
+            app:layout_constraintStart_toStartOf="@+id/video_img"
+            app:layout_constraintTop_toBottomOf="@+id/video_img" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
