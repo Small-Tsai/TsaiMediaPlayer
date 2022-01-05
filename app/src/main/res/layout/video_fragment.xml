@@ -4,40 +4,85 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.tsai.tsaimediaplayer.ui.video.VideoViewModel" />
     </data>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        tools:context=".ui.video.VideoFragment">
+
+        <ImageView
+            android:id="@+id/addOrder_img"
+            imageUrl="@{viewModel.videoInformation.img}"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="210dp"
             android:background="@color/black"
-            tools:context=".ui.video.VideoFragment">
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/addOrder_img"
-                imageUrl="@{viewModel.videoInformation.img}"
-                android:layout_width="match_parent"
-                android:layout_height="210dp"
-                android:background="@color/black"
-                android:scaleType="fitXY"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/video_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@{viewModel.videoInformation.videoName}"
+            android:textColor="@color/white"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addOrder_img" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@{viewModel.videoInformation.videoName}"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addOrder_img" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/video_type_tag"
+            android:textSize="14sp"
+            android:background="@drawable/stroke_corner_radius"
+            android:layout_width="wrap_content"
+            android:padding="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{viewModel.videoInformation.type}"
+            android:textColor="@color/dark_grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/video_title" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/video_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@{viewModel.videoInformation.content}"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            app:cornerRadius="4dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/light_yellow"
+            android:text="立即播放"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/video_type_tag" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
