@@ -36,7 +36,7 @@ enum class VideoInformation(
         "Dizzy",
         "https://html5demos.com/assets/dizzy.mp4",
         "貓咪原地自轉",
-        "https://www.peti-boo.com/wp-content/uploads/2021/05/Cat-with-Glasses-Homepage.jpg",
+        "https://ak.picdn.net/shutterstock/videos/1033213943/thumb/11.jpg",
         "Cat"
     ),
 
@@ -52,7 +52,7 @@ enum class VideoInformation(
         "Dizzy 2",
         "https://storage.googleapis.com/exoplayer-test-media-1/mp4/dizzy-with-tx3g.mp4\n",
         "貓咪原地自轉2",
-        "https://www.peti-boo.com/wp-content/uploads/2021/05/Cat-with-Glasses-Homepage.jpg",
+        "https://ak.picdn.net/shutterstock/videos/1033213943/thumb/11.jpg",
         "Cat"
     ),
 

@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="viewModel"
+            type="com.tsai.tsaimediaplayer.ui.home.HomeViewModel" />
 
         <variable
             name="videoInfo"
@@ -16,6 +19,7 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/video_img"
+            style="@style/video_img_style"
             imageUrl="@{videoInfo.img}"
             android:layout_width="250sp"
             android:layout_height="200sp"
@@ -23,21 +27,21 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:background="@color/white"
+            android:onClick="@{()->viewModel.navToVideoPage(videoInfo)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:shapeAppearanceOverlay="@style/roundedCorner"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            style="@style/video_img_style" />
+            app:shapeAppearanceOverlay="@style/roundedCorner" />
 
         <TextView
             android:layout_width="0dp"
-            android:padding="4dp"
             android:layout_height="wrap_content"
             android:background="@color/dark_grey"
+            android:padding="4dp"
             android:text="@{videoInfo.videoName}"
-            android:textSize="16sp"
             android:textColor="@color/white"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/video_img"
             app:layout_constraintStart_toStartOf="@+id/video_img"
             app:layout_constraintTop_toBottomOf="@+id/video_img" />

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tsai.tsaimediaplayer.databinding.ItemHomeVideoBinding
 
-class VideoImageAdapter :
+class VideoImageAdapter(val homeViewModel: HomeViewModel) :
     ListAdapter<VideoInformation, VideoImageAdapter.FavoriteImageViewHolder>(DiffCallback) {
 
     inner class FavoriteImageViewHolder(
@@ -15,6 +15,7 @@ class VideoImageAdapter :
     ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(videoInfo: VideoInformation) {
+            binding.viewModel = homeViewModel
             binding.videoInfo = videoInfo
             binding.executePendingBindings()
         }

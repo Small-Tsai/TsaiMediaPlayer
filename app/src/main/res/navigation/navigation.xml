@@ -10,4 +10,20 @@
         android:name="com.tsai.tsaimediaplayer.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.tsai.tsaimediaplayer.ui.video.VideoFragment"
+        android:label="VideoFragment" >
+        <argument
+            android:name="video"
+            app:argType="com.tsai.tsaimediaplayer.ui.home.VideoInformation" />
+    </fragment>
+
+    <action
+        android:id="@+id/navToVideoPage"
+        app:destination="@id/videoFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@android:anim/slide_out_right"
+        app:popEnterAnim="@android:anim/slide_in_left"
+        app:popExitAnim="@android:anim/slide_out_right" />
 </navigation>

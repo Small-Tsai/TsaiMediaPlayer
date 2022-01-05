@@ -28,6 +28,7 @@ class HomeAdapter : ListAdapter<MyVideo, RecyclerView.ViewHolder>(DiffCallBack) 
         fun bind(videoInfo: List<VideoInformation>, adapter: VideoImageAdapter) {
             adapter.submitList(videoInfo)
             binding.homeVideoRev.adapter = adapter
+            binding.executePendingBindings()
         }
     }
 
