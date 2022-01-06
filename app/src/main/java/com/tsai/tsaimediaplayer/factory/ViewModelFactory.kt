@@ -6,6 +6,7 @@ import com.tsai.tsaimediaplayer.ui.MainViewModel
 import com.tsai.tsaimediaplayer.ui.home.HomeViewModel
 import com.tsai.tsaimediaplayer.ui.home.VideoInformation
 import com.tsai.tsaimediaplayer.ui.video.VideoViewModel
+import com.tsai.tsaimediaplayer.ui.videoInfo.VideoInfoViewModel
 
 class ViewModelFactory(
     private val videoInformation: VideoInformation? = null,
@@ -21,7 +22,10 @@ class ViewModelFactory(
                     HomeViewModel()
 
                 isAssignableFrom(VideoViewModel::class.java) ->
-                    videoInformation?.let { VideoViewModel(it) }
+                    VideoViewModel()
+
+                isAssignableFrom(VideoInfoViewModel::class.java) ->
+                    videoInformation?.let { VideoInfoViewModel(it) }
 
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

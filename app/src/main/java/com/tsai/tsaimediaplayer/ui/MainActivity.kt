@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             .addOnDestinationChangedListener { navController: NavController, _, _ ->
                 viewModel.currentFragmentType.value = when (navController.currentDestination?.id) {
                     R.id.homeFragment -> CurrentFragmentType.Home
-                    R.id.videoFragment -> CurrentFragmentType.VIDEO
+                    R.id.videoInfoFragment -> CurrentFragmentType.VIDEO
                     else -> viewModel.currentFragmentType.value
                 }
             }

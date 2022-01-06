@@ -11,19 +11,24 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/videoFragment"
-        android:name="com.tsai.tsaimediaplayer.ui.video.VideoFragment"
-        android:label="VideoFragment" >
+        android:id="@+id/videoInfoFragment"
+        android:name="com.tsai.tsaimediaplayer.ui.videoInfo.VideoInfoFragment"
+        android:label="VideoInfoFragment">
         <argument
             android:name="video"
             app:argType="com.tsai.tsaimediaplayer.ui.home.VideoInformation" />
     </fragment>
 
     <action
-        android:id="@+id/navToVideoPage"
-        app:destination="@id/videoFragment"
+        android:id="@+id/navToVideoInfoPage"
+        app:destination="@id/videoInfoFragment"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@android:anim/slide_out_right"
         app:popEnterAnim="@android:anim/slide_in_left"
         app:popExitAnim="@android:anim/slide_out_right" />
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.tsai.tsaimediaplayer.ui.video.VideoFragment"
+        android:label="VideoFragment" />
+    <action android:id="@+id/navToVideoPage" app:destination="@id/videoFragment" />
 </navigation>

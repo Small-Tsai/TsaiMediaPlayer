@@ -1,13 +1,30 @@
 package com.tsai.tsaimediaplayer.ui.video
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import com.google.android.exoplayer2.MediaItem
 import com.tsai.tsaimediaplayer.ui.home.VideoInformation
-import com.tsai.tsaimediaplayer.util.Logger
 
-class VideoViewModel(val videoInformation: VideoInformation) : ViewModel() {
+class VideoViewModel : ViewModel() {
 
-    init {
-        Logger.d("info = ${videoInformation.videoName}")
+    private val _mediaItem = MutableLiveData<List<MediaItem>>()
+    val mediaItem: LiveData<List<MediaItem>>
+        get() = _mediaItem
+
+    fun getVideoList(type: String) {
+        val videoUrlList = VideoInformation.values().filter { it.type == type }.map { it.url }
+        val videoList = mutableListOf<MediaItem>()
+
+        if (videoList.isEmpty()) {
+            videoUrlList.forEach {
+                videoList.add(MediaItem.fromUri(it))
+            }
+
+        }
+
+        _mediaItem.value = videoList
     }
 
 }

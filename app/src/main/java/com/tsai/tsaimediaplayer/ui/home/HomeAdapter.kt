@@ -26,8 +26,11 @@ class HomeAdapter : ListAdapter<MyVideo, RecyclerView.ViewHolder>(DiffCallBack) 
     inner class VideoViewHolder(private val binding: ItemHomeVideoRevBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(videoInfo: List<VideoInformation>, adapter: VideoImageAdapter) {
+
+            // Submit data into horizontal recyclerView
             adapter.submitList(videoInfo)
             binding.homeVideoRev.adapter = adapter
+
             binding.executePendingBindings()
         }
     }
@@ -73,6 +76,9 @@ class HomeAdapter : ListAdapter<MyVideo, RecyclerView.ViewHolder>(DiffCallBack) 
     }
 }
 
+/**
+ * Using sealed class to separate different viewType
+ */
 sealed class MyVideo {
     data class Type(val type: String) : MyVideo()
     data class VideoInfo(val video: List<VideoInformation>, val adapter: VideoImageAdapter) :

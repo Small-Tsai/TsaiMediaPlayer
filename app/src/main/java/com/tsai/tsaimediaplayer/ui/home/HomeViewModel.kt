@@ -3,8 +3,6 @@ package com.tsai.tsaimediaplayer.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.tsai.tsaimediaplayer.util.Logger
-import kotlinx.coroutines.flow.MutableSharedFlow
 
 class HomeViewModel : ViewModel() {
 
@@ -13,14 +11,24 @@ class HomeViewModel : ViewModel() {
     val myVideoList: LiveData<MutableList<MyVideo>>
         get() = _myVideoList
 
-    private val _isNavToVideoPage = MutableLiveData<VideoInformation?>()
-    val isNavToVideoPage: LiveData<VideoInformation?>
-        get() = _isNavToVideoPage
+    /**
+     * LiveData for navigation from home to videoPage
+     */
+    private val _isNavToVideoInfoPage = MutableLiveData<VideoInformation?>()
+    val isNavToVideoInfoPage: LiveData<VideoInformation?>
+        get() = _isNavToVideoInfoPage
 
     init {
 
+        /**
+         * get all the video type in [VideoInformation]
+         */
         val titleList = VideoInformation.values().map { it.type }.distinct()
 
+        /**
+         * setup videoList and create VideoImageAdapter for horizontal recyclerView which
+         * inside of the vertical recyclerView
+         */
         titleList.forEach { title ->
             _myVideoList.value?.let {
                 it.add(
@@ -36,9 +44,12 @@ class HomeViewModel : ViewModel() {
         }
     }
 
+    /**
+     * using DataBinding to get videoInfo from recyclerView Item when user click on video Image
+     */
     fun navToVideoPage(videoInfo: VideoInformation) {
-        _isNavToVideoPage.value = videoInfo
-        _isNavToVideoPage.value = null
+        _isNavToVideoInfoPage.value = videoInfo
+        _isNavToVideoInfoPage.value = null
     }
 
 }
