@@ -2,30 +2,27 @@ package com.tsai.tsaimediaplayer.ui.video
 
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.ui.PlayerView.SHOW_BUFFERING_ALWAYS
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackException
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerView.VISIBLE
 import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.tsai.tsaimediaplayer.R
 import com.tsai.tsaimediaplayer.databinding.FragmentVideoBinding
 import com.tsai.tsaimediaplayer.ext.getVmFactory
 import com.tsai.tsaimediaplayer.ext.toast
-import com.tsai.tsaimediaplayer.ui.MainViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

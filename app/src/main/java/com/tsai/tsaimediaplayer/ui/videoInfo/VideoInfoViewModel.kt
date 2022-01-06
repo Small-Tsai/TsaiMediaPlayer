@@ -2,7 +2,6 @@ package com.tsai.tsaimediaplayer.ui.videoInfo
 
 import androidx.lifecycle.*
 import com.tsai.tsaimediaplayer.ui.home.VideoInformation
-import com.tsai.tsaimediaplayer.util.Logger
 
 class VideoInfoViewModel(val videoInformation: VideoInformation) : ViewModel() {
 

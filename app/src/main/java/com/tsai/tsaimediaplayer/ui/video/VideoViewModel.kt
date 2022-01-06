@@ -1,12 +1,10 @@
 package com.tsai.tsaimediaplayer.ui.video
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.google.android.exoplayer2.MediaItem
 import com.tsai.tsaimediaplayer.ui.home.VideoInformation
-import com.tsai.tsaimediaplayer.util.Logger
 
 class VideoViewModel(val videoInformationArray: Array<VideoInformation>?) : ViewModel() {
 
