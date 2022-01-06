@@ -10,8 +10,12 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.ui.PlayerView.SHOW_BUFFERING_ALWAYS
@@ -22,6 +26,8 @@ import com.tsai.tsaimediaplayer.databinding.FragmentVideoBinding
 import com.tsai.tsaimediaplayer.ext.getVmFactory
 import com.tsai.tsaimediaplayer.ext.toast
 import com.tsai.tsaimediaplayer.ui.MainViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class VideoFragment : Fragment() {
@@ -29,6 +35,7 @@ class VideoFragment : Fragment() {
     private lateinit var binding: FragmentVideoBinding
     private lateinit var exoPlayer: ExoPlayer
     private lateinit var styledPlayer: StyledPlayerView
+    private lateinit var windowInsetsController: WindowInsetsControllerCompat
 
     private val viewModel by viewModels<VideoViewModel> {
         getVmFactory(
@@ -51,13 +58,12 @@ class VideoFragment : Fragment() {
     ): View {
         binding = FragmentVideoBinding.inflate(inflater, container, false)
 
+        ViewCompat.getWindowInsetsController(requireActivity().window.decorView)?.let {
+            windowInsetsController = it
+        }
+
         initPlayer()
         setupPlayer()
-
-        /**
-         * make sure always keep screen on when video is playing
-         */
-        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         viewModel.mediaItem.observe(viewLifecycleOwner, {
             exoPlayer.setMediaItems(it)
@@ -68,7 +74,47 @@ class VideoFragment : Fragment() {
 
     private fun setupPlayer() {
 
+        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
+
+        /**
+         * make sure always keep screen on when video is playing
+         */
+        styledPlayer.keepScreenOn = true
+
+        styledPlayer.setControllerVisibilityListener {
+            when (it) {
+                GONE -> {
+                    // Hide both the status bar and the navigation bar
+                    windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
+                    binding.episodeNameTxt.visibility = GONE
+                }
+                VISIBLE -> {
+                    windowInsetsController.show(WindowInsetsCompat.Type.navigationBars())
+                    binding.episodeNameTxt.visibility = VISIBLE
+                }
+            }
+        }
+
         exoPlayer.addListener(object : Player.Listener {
+
+            /**
+             * show videoName when video change
+             */
+            override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+                super.onMediaItemTransition(mediaItem, reason)
+
+                viewModel.videoInformationArray?.let {
+
+                    binding.episodeNameTxt.text = it[exoPlayer.currentMediaItemIndex].videoName
+
+                    lifecycleScope.launch {
+                        binding.episodeNameTxt.visibility = VISIBLE
+                        delay(3000)
+                        binding.episodeNameTxt.visibility = GONE
+                    }
+                }
+
+            }
 
             /**
              * when [exoPlayer] isPlaying hide progressBar
@@ -77,6 +123,7 @@ class VideoFragment : Fragment() {
                 super.onIsPlayingChanged(isPlaying)
                 if (isPlaying) {
                     binding.progressBar.visibility = GONE
+                    binding.episodeNameTxt.visibility = GONE
                 }
             }
 
@@ -139,17 +186,10 @@ class VideoFragment : Fragment() {
         exoPlayer.release()
     }
 
-    /**
-     * when fragment's lifecycle onDestroy clear FLAG_KEEP_SCREEN_ON
-     */
-    override fun onDestroy() {
-        super.onDestroy()
-        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-    }
-
     private fun setBackPressedBehavior() {
         val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                windowInsetsController.show(WindowInsetsCompat.Type.systemBars())
                 requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
                 findNavController().popBackStack()
             }

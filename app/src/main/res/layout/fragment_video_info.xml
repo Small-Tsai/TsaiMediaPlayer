@@ -32,7 +32,7 @@
                 app:layout_constraintTop_toTopOf="@+id/video_title" />
 
             <ImageView
-                android:id="@+id/addOrder_img"
+                android:id="@+id/video_info_top_img"
                 imageUrl="@{viewModel.videoInformation.img}"
                 android:layout_width="match_parent"
                 android:layout_height="210dp"
@@ -54,7 +54,7 @@
                 android:textSize="26sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addOrder_img" />
+                app:layout_constraintTop_toBottomOf="@+id/video_info_top_img" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/video_type_tag"
@@ -128,6 +128,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/same_type_video_txt" />
+
+            <ImageView
+                android:id="@+id/popBack_img_btn"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/icon_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

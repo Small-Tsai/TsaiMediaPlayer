@@ -38,7 +38,17 @@ class VideoInfoFragment : Fragment() {
 
             adapter.submitList(it)
 
-            if (it.isEmpty()) binding.sameTypeVideoTxt.visibility = View.GONE
+            if (it.isEmpty()) {
+                binding.sameTypeVideoTxt.visibility = View.GONE
+                binding.episodeTxt.visibility = View.GONE
+            }
+        })
+
+        videoViewModel.isNavToVideoInfoPage.observe(viewLifecycleOwner, {
+            it?.let {
+                findNavController()
+                    .navigate(NavigationDirections.navToVideoInfoPage(it))
+            }
         })
 
         binding.apply {
@@ -47,6 +57,10 @@ class VideoInfoFragment : Fragment() {
 
             playVideoBtn.setOnClickListener {
                 videoViewModel.playVideo()
+            }
+
+            popBackImgBtn.setOnClickListener {
+                findNavController().popBackStack()
             }
 
             "第${videoViewModel.videoInformation.episode}集".also { episodeTxt.text = it }

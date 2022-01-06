@@ -8,7 +8,7 @@ import com.google.android.exoplayer2.MediaItem
 import com.tsai.tsaimediaplayer.ui.home.VideoInformation
 import com.tsai.tsaimediaplayer.util.Logger
 
-class VideoViewModel(videoInformationArray: Array<VideoInformation>?) : ViewModel() {
+class VideoViewModel(val videoInformationArray: Array<VideoInformation>?) : ViewModel() {
 
     /**
      * LiveData for list of same type video which MediaItem is get from videoUrl

@@ -10,6 +10,10 @@ class VideoInfoViewModel(val videoInformation: VideoInformation) : ViewModel() {
     val isNavToVideoPage: LiveData<List<VideoInformation>?>
         get() = _isNavToVideoPage
 
+    private val _isNavToVideoInfoPage = MutableLiveData<VideoInformation?>()
+    val isNavToVideoInfoPage: LiveData<VideoInformation?>
+        get() = _isNavToVideoInfoPage
+
     private val sameTypeVideoList: LiveData<List<VideoInformation>> = liveData {
         emit(
             VideoInformation.values()
@@ -34,6 +38,11 @@ class VideoInfoViewModel(val videoInformation: VideoInformation) : ViewModel() {
         _isNavToVideoPage.value = list
 
         _isNavToVideoPage.value = null
+    }
+
+    fun navToVideoPage(videoInfo: VideoInformation) {
+        _isNavToVideoInfoPage.value = videoInfo
+        _isNavToVideoInfoPage.value = null
     }
 
 }
