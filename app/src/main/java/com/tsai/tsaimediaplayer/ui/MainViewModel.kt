@@ -9,6 +9,4 @@ class MainViewModel : ViewModel() {
     // Record current fragment to support data binding
     val currentFragmentType = MutableLiveData<CurrentFragmentType>()
 
-    // Record current video type
-    val currentVideoType = MutableLiveData<String>()
 }

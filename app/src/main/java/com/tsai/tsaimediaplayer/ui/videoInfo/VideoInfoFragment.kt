@@ -25,11 +25,20 @@ class VideoInfoFragment : Fragment() {
     ): View {
         binding = FragmentVideoInfoBinding.inflate(inflater, container, false)
 
+        val adapter = VideoInfoAdapter(videoViewModel)
+
         videoViewModel.isNavToVideoPage.observe(viewLifecycleOwner, {
             it?.let {
                 findNavController()
-                    .navigate(NavigationDirections.navToVideoPage())
+                    .navigate(NavigationDirections.navToVideoPage(it.toTypedArray()))
             }
+        })
+
+        videoViewModel.otherSameTypeVideoList.observe(viewLifecycleOwner, {
+
+            adapter.submitList(it)
+
+            if (it.isEmpty()) binding.sameTypeVideoTxt.visibility = View.GONE
         })
 
         binding.apply {
@@ -37,8 +46,12 @@ class VideoInfoFragment : Fragment() {
             viewModel = videoViewModel
 
             playVideoBtn.setOnClickListener {
-                videoViewModel.navToVideoPage()
+                videoViewModel.playVideo()
             }
+
+            "第${videoViewModel.videoInformation.episode}集".also { episodeTxt.text = it }
+
+            videoInfoRev.adapter = adapter
 
             return root
         }

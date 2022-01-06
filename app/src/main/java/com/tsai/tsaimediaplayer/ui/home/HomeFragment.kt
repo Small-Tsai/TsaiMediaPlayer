@@ -41,7 +41,6 @@ class HomeFragment : Fragment() {
         // Navigation to videoPage
         viewModel.isNavToVideoInfoPage.observe(viewLifecycleOwner, {
             it?.let {
-                mainViewModel.currentVideoType.value = it.type
                 findNavController().navigate(NavigationDirections.navToVideoInfoPage(it))
             }
         })

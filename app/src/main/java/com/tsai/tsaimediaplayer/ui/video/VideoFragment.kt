@@ -31,28 +31,18 @@ class VideoFragment : Fragment() {
     private lateinit var styledPlayer: StyledPlayerView
 
     private val viewModel by viewModels<VideoViewModel> {
-        getVmFactory()
+        getVmFactory(
+            VideoFragmentArgs.fromBundle(requireArguments()).videoList
+        )
     }
-
-    private lateinit var mainViewModel: MainViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
-        mainViewModel.currentVideoType.value?.let { viewModel.getVideoList(it) }
-
-        // set backPressed behavior
-        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-                findNavController().popBackStack()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            callback
-        )
+        /**
+         * custom backPressed behavior to make sure screen orientation is portrait in videoInfoPage
+         */
+        setBackPressedBehavior()
     }
 
     override fun onCreateView(
@@ -62,9 +52,11 @@ class VideoFragment : Fragment() {
         binding = FragmentVideoBinding.inflate(inflater, container, false)
 
         initPlayer()
-
         setupPlayer()
 
+        /**
+         * make sure always keep screen on when video is playing
+         */
         requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         viewModel.mediaItem.observe(viewLifecycleOwner, {
@@ -75,7 +67,12 @@ class VideoFragment : Fragment() {
     }
 
     private fun setupPlayer() {
+
         exoPlayer.addListener(object : Player.Listener {
+
+            /**
+             * when [exoPlayer] isPlaying hide progressBar
+             */
             override fun onIsPlayingChanged(isPlaying: Boolean) {
                 super.onIsPlayingChanged(isPlaying)
                 if (isPlaying) {
@@ -83,11 +80,17 @@ class VideoFragment : Fragment() {
                 }
             }
 
+            /**
+             * when [exoPlayer] error show toast of error message
+             */
             override fun onPlayerError(error: PlaybackException) {
                 super.onPlayerError(error)
                 toast("$error")
             }
 
+            /**
+             * when [exoPlayer] is buffering show progressBar
+             */
             override fun onPlaybackStateChanged(playbackState: Int) {
                 super.onPlaybackStateChanged(playbackState)
                 when (playbackState) {
@@ -96,6 +99,9 @@ class VideoFragment : Fragment() {
             }
         })
 
+        /**
+         * custom [styledPlayer] full screen button behavior
+         */
         styledPlayer.setControllerOnFullScreenModeChangedListener {
             if (it) {
                 requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
@@ -106,27 +112,52 @@ class VideoFragment : Fragment() {
         }
     }
 
+    /**
+     * initialize [styledPlayer] and [exoPlayer]
+     */
     private fun initPlayer() {
         styledPlayer = binding.exoPlayer
         exoPlayer = ExoPlayer.Builder(requireContext()).build()
         styledPlayer.player = exoPlayer
     }
 
+    /**
+     * when fragment's lifecycle onStart prepare and play [exoPlayer]
+     */
     override fun onStart() {
         super.onStart()
         exoPlayer.prepare()
         exoPlayer.play()
     }
 
+    /**
+     * when fragment's lifecycle onStop stop and release [exoPlayer]
+     */
     override fun onStop() {
         super.onStop()
         exoPlayer.stop()
         exoPlayer.release()
     }
 
+    /**
+     * when fragment's lifecycle onDestroy clear FLAG_KEEP_SCREEN_ON
+     */
     override fun onDestroy() {
         super.onDestroy()
         requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+
+    private fun setBackPressedBehavior() {
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+                findNavController().popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            callback
+        )
     }
 
 }

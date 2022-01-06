@@ -13,6 +13,10 @@ fun Fragment.getVmFactory(videoInformation: VideoInformation): ViewModelFactory 
     return ViewModelFactory(videoInformation)
 }
 
+fun Fragment.getVmFactory(videoInformation: Array<VideoInformation>): ViewModelFactory {
+    return ViewModelFactory(videoInformationArray = videoInformation)
+}
+
 fun Fragment.toast(str: String) {
     Toast.makeText(requireContext(), str, Toast.LENGTH_SHORT).show()
 }

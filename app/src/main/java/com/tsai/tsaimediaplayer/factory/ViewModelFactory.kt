@@ -10,6 +10,7 @@ import com.tsai.tsaimediaplayer.ui.videoInfo.VideoInfoViewModel
 
 class ViewModelFactory(
     private val videoInformation: VideoInformation? = null,
+    private val videoInformationArray: Array<VideoInformation>? = null,
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T =
@@ -22,7 +23,7 @@ class ViewModelFactory(
                     HomeViewModel()
 
                 isAssignableFrom(VideoViewModel::class.java) ->
-                    VideoViewModel()
+                    VideoViewModel(videoInformationArray)
 
                 isAssignableFrom(VideoInfoViewModel::class.java) ->
                     videoInformation?.let { VideoInfoViewModel(it) }

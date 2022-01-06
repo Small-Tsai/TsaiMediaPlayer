@@ -29,6 +29,10 @@
     <fragment
         android:id="@+id/videoFragment"
         android:name="com.tsai.tsaimediaplayer.ui.video.VideoFragment"
-        android:label="VideoFragment" />
+        android:label="VideoFragment" >
+        <argument
+            android:name="videoList"
+            app:argType="com.tsai.tsaimediaplayer.ui.home.VideoInformation[]" />
+    </fragment>
     <action android:id="@+id/navToVideoPage" app:destination="@id/videoFragment" />
 </navigation>

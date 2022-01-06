@@ -3,4 +3,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="play">立即播放</string>
+    <string name="same_video">同類型影片</string>
 </resources>
